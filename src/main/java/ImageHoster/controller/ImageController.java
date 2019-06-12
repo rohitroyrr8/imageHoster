@@ -33,7 +33,7 @@ public class ImageController {
     @RequestMapping("images")
     public String getUserImages(Model model, HttpSession session) {
         if(session.getAttribute("loggeduser") == null) {
-            return "users/login";
+            return "redirect:/users/login";
         }
         User loggedInUser = (User) session.getAttribute("loggeduser");
         List<Image> images = imageService.getAllImages(loggedInUser);
@@ -51,7 +51,9 @@ public class ImageController {
     public String showImage(@PathVariable("id") Integer id, Model model, HttpSession session) {
         Image image = imageService.getImageById(id);
         model.addAttribute("image", image);
-
+        if(image == null) {
+            return "redirect:/";
+        }
         List<Comment> comments = commentService.getComments(image);
         model.addAttribute("comments", comments);
 

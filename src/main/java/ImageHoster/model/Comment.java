@@ -8,7 +8,7 @@ import java.util.Date;
 @Table(name = "comments")
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "text")
@@ -17,11 +17,11 @@ public class Comment {
     @Column(name = "date")
     private Date date;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+    @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+    @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name = "image_id")
     private Image image;
 

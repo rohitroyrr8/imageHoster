@@ -31,7 +31,6 @@ public class CommentController {
         }
         User user = (User) session.getAttribute("loggeduser");
         Image image = imageService.getImage(imageId);
-        Comment temp = new Comment();
         comment.setId(0);
         comment.setUser(user);
         comment.setImage(image);

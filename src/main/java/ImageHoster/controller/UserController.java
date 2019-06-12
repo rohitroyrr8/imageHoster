@@ -122,6 +122,6 @@ public class UserController {
         //fetching images from databse and return to index.html page
         List<Image> images = imageService.getAllImages();
         model.addAttribute("images", images);
-        return "index";
+        return "redirect:/";
     }
 }
