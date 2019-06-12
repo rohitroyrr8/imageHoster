@@ -15,6 +15,8 @@ public class HomeController {
     @Autowired
     private ImageService imageService;
 
+    // This controller method is called when the request path is
+    // '/' and also the incoming request is of GET type
     @RequestMapping("/")
     public String getAllImages(Model model) {
         List<Image> images = imageService.getAllImages();
@@ -22,18 +24,4 @@ public class HomeController {
         return "index";
     }
 
-    @RequestMapping("/test")
-    public String test() {
-        return "test";
-    }
-
-    @RequestMapping("/test_register")
-    public String testRegister() {
-        return "test_register";
-    }
-
-    @RequestMapping("/template")
-    public String template() {
-        return "template";
-    }
 }

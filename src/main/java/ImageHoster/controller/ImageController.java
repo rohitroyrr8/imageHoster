@@ -29,7 +29,12 @@ public class ImageController {
     @Autowired
     private CommentService commentService;
 
-    //This method displays all the images in the user home page after successful login
+    /**
+     * This method displays all the images in the user home page after successful login
+     *
+     * @param model: instead of model class
+     * @param session : to verify if user is logged-in or not
+     */
     @RequestMapping("images")
     public String getUserImages(Model model, HttpSession session) {
         if(session.getAttribute("loggeduser") == null) {
@@ -41,12 +46,13 @@ public class ImageController {
         return "images";
     }
 
-    //This method is called when the details of the specific image with corresponding title are to be displayed
-    //The logic is to get the image from the databse with corresponding title. After getting the image from the database the details are shown
-    //First receive the dynamic parameter in the incoming request URL in a string variable 'title' and also the Model type object
-    //Call the getImageByTitle() method in the business logic to fetch all the details of that image
-    //Add the image in the Model type object with 'image' as the key
-    //Return 'images/image.html' file
+    /**
+     * This method displays all the details of a image a well as user can edit/delete/comment on that image
+     *
+     * @param id : id of a image
+     * @param model: instead of model class
+     * @param session : to verify if user is logged-in or not
+     */
     @RequestMapping("/images/{id}")
     public String showImage(@PathVariable("id") Integer id, Model model, HttpSession session) {
         Image image = imageService.getImageById(id);
@@ -69,8 +75,12 @@ public class ImageController {
         return "images/image";
     }
 
-    //This controller method is called when the request pattern is of type 'images/upload'
-    //The method returns 'images/upload.html' file
+    /**
+     * This method display image upload page template when hitting '/images/upload'
+     * path and incoming request is of  type 'GET'
+     * @param session : to verify if user is logged-in or not
+     */
+
     @RequestMapping("/images/upload")
     public String newImage(HttpSession session) {
         if(session.getAttribute("loggeduser") == null) {
@@ -85,6 +95,14 @@ public class ImageController {
     //Convert the image to Base64 format and store it as a string in the 'imageFile' attribute
     //Set the date on which the image is posted
     //After storing the image, this method directs to the logged in user homepage displaying all the images
+
+    /**
+     * This method upload image to the systsm only when hitting '/images/upload'
+     * path and incoming request is of  type 'POST'
+     * @param session : to verify if user is logged-in or not
+     * @param file : image file to upload to server
+     * @throws : IOException
+     */
     @RequestMapping(value = "/images/upload", method = RequestMethod.POST)
     public String createImage(@RequestParam("file") MultipartFile file, Image newImage, HttpSession session) throws IOException {
         if(session.getAttribute("loggeduser") == null) {
@@ -102,6 +120,12 @@ public class ImageController {
     //This controller method is called when the request pattern is of type 'editImage'
     //This method fetches the image with the corresponding id from the database and adds it to the model with the key as 'image'
     //The method then returns 'images/edit.html' file wherein you fill all the updated details of the image
+    /**
+     * This method display image edit  page template when hitting '/editImage?imageId=image_id'
+     * path and incoming request is of  type 'GET'
+     * @param imageId : unique id of image
+     * @param session : to verify if user is logged-in or not
+     */
     @RequestMapping(value = "/editImage")
     public String editImage(@RequestParam("imageId") Integer imageId, Model model, HttpSession session) {
         if(session.getAttribute("loggeduser") == null) {
@@ -119,14 +143,14 @@ public class ImageController {
         return "redirect:/images/" + image.getId();
     }
 
-    //This controller method is called when the request pattern is of type 'images/edit' and also the incoming request is of PUT type
-    //The method receives the imageFile, imageId, updated image, along with the Http Session
-    //The method adds the new imageFile to the updated image if user updates the imageFile and adds the previous imageFile to the new updated image if user does not choose to update the imageFile
-    //Set an id of the new updated image
-    //Set the user using Http Session
-    //Set the date on which the image is posted
-    //Call the updateImage() method in the business logic to update the image
-    //Direct to the same page showing the details of that particular updated image
+    /**
+     * This controller method is called when the request pattern is of type 'images/edit' and also the incoming request is of PUT type
+     * path and incoming request is of  type 'GET'
+     * @param imageId : unique id of image
+     * @param updatedImage : image that we need to update
+     * @param session : to verify if user is logged-in or not
+     *
+     */
     @RequestMapping(value = "/editImage", method = RequestMethod.PUT)
     public String editImageSubmit(@RequestParam("file") MultipartFile file, @RequestParam("imageId") Integer imageId, Image updatedImage, HttpSession session) throws IOException {
         if(session.getAttribute("loggeduser") == null) {
@@ -151,13 +175,17 @@ public class ImageController {
         return "redirect:/images/" + updatedImage.getId();
     }
 
-
-    //This controller method is called when the request pattern is of type 'deleteImage' and also the incoming request is of DELETE type
-    //The method calls the deleteImage() method in the business logic passing the id of the image to be deleted
-    //Looks for a controller method with request mapping of type '/images'
+    /**
+     * This controller method is called when the request pattern is of type 'deleteImage'
+     * and also the incoming request is of DELETE type
+     *
+     * @param imageId : unique id of image
+     * @param session : to verify if user is logged-in or not
+     *
+     */
     @RequestMapping(value = "/deleteImage", method = RequestMethod.DELETE)
     public String deleteImageSubmit(@RequestParam(name = "imageId") Integer imageId, HttpSession session) {
-        //Complete the method
+        //to check whether user is logged-in or not
         if(session.getAttribute("loggeduser") == null) {
             return "users/login";
         }
@@ -173,7 +201,14 @@ public class ImageController {
         return "redirect:/images/" + image.getId();
     }
 
-    //This method converts the image to Base64 format
+    /**
+     * This method is user to covert image to base64 byte code
+     *
+     * @param file: iamge file that need to convert
+     * @return string of base64 encoding string
+     * @throws IOException
+     *
+     */
     private String convertUploadedFileToBase64(MultipartFile file) throws IOException {
         return Base64.getEncoder().encodeToString(file.getBytes());
     }

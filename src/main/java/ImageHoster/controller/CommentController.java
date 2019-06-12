@@ -23,9 +23,17 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
+    /**
+     * This controller method is called when the request pattern is
+     * of type 'image/image_id/image_title/comments' and also the incoming request is of POST type
+     *
+     * @param imageId : unique id of image
+     * @param comment : comment object that need to be saved
+     * @param session : to verify if user is logged-in or not
+     */
 
     @RequestMapping(value = "/image/{id}/{title}/comments", method = RequestMethod.POST)
-    public String create(@PathVariable("id") Integer imageId, Model model, HttpSession session, Comment comment) {
+    public String create(@PathVariable("id") Integer imageId, HttpSession session, Comment comment) {
         if(session.getAttribute("loggeduser") == null) {
             return "redirect:/users/login";
         }
