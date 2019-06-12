@@ -1,0 +1,23 @@
+<!Doctype html>
+
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="template :: header">
+
+</head>
+
+<body>
+<nav th:replace="template :: navbar"></nav>
+<div class="container ">
+    <h2 class="p-2" >Welcome User. These are the images</h2>
+    <div class="row pt-3">
+        <div th:each="i : ${images}" class="card col-md-4 p-2">
+            <img style="height: 200px" th:src="'data:image/jpeg;base64,'+${i.imageFile}"/>
+            <a th:href="@{'/images/' + ${i.id}}">
+                <h4 class="pt-2" th:text="${i.title}"></h4>
+            </a>
+            <i>Posted On: </i> <span th:text="${i.date}"></span>
+        </div>
+    </div>
+
+</body>
+</html>

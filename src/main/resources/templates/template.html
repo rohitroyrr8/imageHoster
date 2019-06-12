@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8">
+    <title>ImageHoster Application</title>
+    <!--<link rel="stylesheet" th:href="@{/css/style.css}">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" >
+    <link rel="stylesheet" type="text/css" href="https://byteprojects.in/pdo_login/public/css/style.css">
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+    <style type="text/css">
+        a {
+            text-decoration: none !important;
+        }
+        h4 {
+            color: #42B983;
+        }
+        .navbar-text {
+            padding: 15px 10px;
+        }
+        .btn-primary {
+            background: #42b983 !important;
+            border-color: #42b983;
+        }
+        .btn-primary.focus, .btn-primary:focus {
+            box-shadow: 0 0 0 0.2rem rgb(66, 185, 131);
+        }
+        li {
+            color: #d40d0d;
+        }
+        .form-panel {
+            width: 470px;
+            padding: 23px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 0 60px rgba(0,0,0,.15);
+        }
+        .highlight {
+            color: #42b983 !Important;
+        }
+        .highlight-div {
+            background: #42b983;
+            color: #fff;
+        }
+        .progress {
+            background: grey;
+            color: white;
+            border-radius: 26px;
+            padding: 5px 10px;
+            margin: 0px 10px;
+            display: initial;
+        }
+        .progress .active {
+            background: #42b983 !Important;
+        }
+    </style>
+</head>
+
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand highlight" th:href="@{/}">ImageHoster</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/images}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Page 1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Page 2</a>
+            </li>
+        </ul>
+        <div th:switch="${session.isLoggedIn}">
+            <div th:case="'true'">
+                <div th:replace="layout :: logged-in"></div>
+            </div>
+            <div th:case="*">
+                <div th:replace="layout :: logged-out"></div>
+            </div>
+        </div>
+
+    </div>
+
+</nav>
+
+
+<footer th:fragment="footer">
+    <p class="text-center p-4">@copyright ImageHoster 2012 - 2019</p>
+</footer>
+</html>

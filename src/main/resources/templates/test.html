@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="template :: header">
+    <title>Login - ImageHoster App</title>
+</head>
+<body>
+<div class="">
+    <nav th:replace="template :: navbar"></nav>
+    <div class="container form-panel  modal-md mt-4 ">
+        <div class="">
+            <div class="text-center">
+                <h2><span class="highlight">Log-in</span> to your account</h2>
+            </div>
+            <!--<div class="alert mb-3 mt-3" style="
+            color: #ffffff;
+            background-color: #42b983;">
+                Incorrect Email/Password</div>-->
+            <form th:action="@{/users/login}" th:method="POST" th:object="${User}">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="passsword" class="form-control" id="password" name="password">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-block btn-primary" value="Login" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:replace="template :: footer"></div>
+</body>
+</html>

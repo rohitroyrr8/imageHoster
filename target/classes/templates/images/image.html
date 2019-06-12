@@ -1,0 +1,58 @@
+<!Doctype html>
+
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="template :: header">
+
+</head>
+
+<body>
+<nav th:replace="template :: navbar"></nav>
+<div class="container form-panel  modal-lg mt-4 mb-4 ">
+
+    <div th:if="${editError}" class="alert mb-3 mt-3" style="
+            color: #ffffff; background-color: #42b983;" th:text="${editError}"></div>
+    <div th:if="${deleteError}" class="alert mb-3 mt-3" style="
+            color: #ffffff; background-color: #42b983;" th:text="${deleteError}"></div>
+    <div class="mt-4">
+        <img style="width: 100%" th:src="'data:image/jpeg;base64,'+${image.imageFile}"/>
+    </div>
+
+    <h3 th:text="${image.title}">title</h3>
+    <div><i>Posted On: </i> <span th:text="${image.date}"></span></div>
+    <div><i>Description: </i> <span th:text="${image.description}"></span></div>
+    <div th:switch="${session.isLoggedIn}">
+    <div th:case="'true'">
+        <a th:href="@{/editImage(imageId=${image.id})}" class="btn btn-light">Edit</a>
+        <form style="float: right;" th:action="@{/deleteImage(imageId=${image.id})}" th:method="delete">
+            <input class="btn btn-danger" type="submit" value="Delete"/>
+        </form>
+    </div>
+    </div>
+    <div class="comments mt5">
+        <article class="m-2" th:each="comment : ${comments}">
+            <h6 class="highlight m-0" th:text="${comment.user.username} + ' says'"></h6>
+            <div class="pa3 bt b--black-10">
+                <h3 class="m-0" th:text="${comment.text}">text</h3>
+                <i th:text="${comment.date}"></i>
+            </div>
+        </article>
+
+    </div>
+
+    <form method="POST" enctype="multipart/form-data"  th:action="'/image/'+ ${image.id} + '/' + ${image.title} + '/comments'" >
+        <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
+            <div class="mt-3 form-group">
+                <label class="db fw6 lh-copy f6" for="text">Write a comment</label>
+                <textarea class="form-control" rows="2" name="text" id="text"></textarea>
+            </div>
+        </fieldset>
+
+        <div class="form-group">
+            <input class="btn btn-primary form-control" type="submit" value="Submit">
+        </div>
+
+    </form>
+
+</div>
+</body>
+</html>

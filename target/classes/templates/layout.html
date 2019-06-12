@@ -1,0 +1,38 @@
+<!Doctype html>
+
+<html xmlns:th="http://thymeleaf.org">
+<head th:fragment="site-head">
+    <title>Spring MVC Application - Image Hoster</title>
+</head>
+
+<body>
+
+<!-- The logged-out fragment now contains Login as well as Registration-->
+<header th:fragment="logged-out" th:remove="tag">
+    <span class="navbar-text">
+          <a href="users/login.html" th:href="@{/users/login}">Login</a>
+    </span>
+    <span class="navbar-text">
+          <a href="users/registration.html" th:href="@{/users/registration}">Registration</a>
+    </span>
+</header>
+
+<!-- Define a logged-in fragment-->
+<header th:fragment="logged-in" th:remove="tag">
+    <span class="navbar-text">
+          <b>Hello, <b th:text="${session.loggeduser.profile.fullName}"></b></b>
+    </span>
+    <span class="navbar-text">
+           <a href="images/upload.html" th:href="@{/images/upload}">Upload Image</a>
+    </span>
+    <span class="navbar-text">
+        <form method="post" th:action="@{/users/logout}">
+            <input class="btn btn-light" type="submit" value="Logout"/>
+        </form>
+    </span>
+
+</header>
+
+</body>
+
+</html>
